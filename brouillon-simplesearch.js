@@ -139,12 +139,24 @@ function searchStudents(searchInput, students) {
             paginationButtons(data2);
         }
 
-        // if (data2 = []) {
-        //     ulStudent.innerHTML = "";
-        //     ulStudent.insertAdjacentHTML("beforeend", '<p>No results found</p>');
+        // else {
+        //     break;
         // }
     });
+    // if (data2 = []) {
+    //     ulStudent.innerHTML = "";
+    //     ulStudent.insertAdjacentHTML("beforeend", '<p>No results found</p>');
+    // }
 }
+
+
+// function noResultsFound() {
+//     if (data2 = []) {
+//         ulStudent.innerHTML = "";
+//         ulStudent.insertAdjacentHTML("beforeend", '<p>No results found</p>');
+
+//     }
+// }
 
 /**
  * Event listeners for buttons - Invoke your search function in the body of the callbacks in the event listeners below

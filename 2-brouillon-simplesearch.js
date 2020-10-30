@@ -50,7 +50,7 @@ function showPage(list, page) {
 function paginationButtons(list) {
 
     // Create a variable to store the value of the number of pagination buttons needed.
-    const numberOfPagination = (Math.ceil(list.length / itemsPerPage));
+    const numberOfPagination = Math.round(list.length / itemsPerPage);
 
     ulLink.innerHTML = "";
 
@@ -125,36 +125,77 @@ const searchButton = searchLabel.querySelector('[type="button"]');
 
 function searchStudents(searchInput, students) {
     ulStudent.innerHTML = "";
-    let data2 = [];
+    data2 = [];
 
     students.forEach(function (person) {
-
         if (searchInput.value.length == 0) {
             showPage(data, 1);
             paginationButtons(data);
         }
-        else if (searchInput.value.length != 0 && person.name.first.toLowerCase().includes(searchInput.value.toLowerCase())) {
-            data2.push(person);
-            showPage(data2, 1)
-            paginationButtons(data2);
-        }
 
-        // if (data2 = []) {
-        //     ulStudent.innerHTML = "";
+        else if (searchInput.value.length != 0 && person.name.first.toLowerCase().includes(searchInput.value.toLowerCase())) {
+            ulStudent.insertAdjacentHTML("beforeend",
+                `<li class="student-item cf">
+                    <div class="student-details">
+                        <img class="avatar" src="${person.picture.large}" alt="Profile Picture">
+                        <h3> ${person.name.first} ${person.name.last} </h3>
+                        <span class="email"> ${person.email}</span>
+                    </div>
+                    <div class="joined-details">
+                        <span class="date">${person.registered.date}</span>
+                    </div>
+                 </li> `);
+            data2.push(person);
+
+            searchPagination();
+            showPage(list, page)
+        }
+        console.log(data2);
+
+        // else {
         //     ulStudent.insertAdjacentHTML("beforeend", '<p>No results found</p>');
         // }
     });
 }
 
+
+
+function searchPagination() {
+    const newNumberOfPagination = Math.round(data2.length / itemsPerPage);
+
+    ulLink.innerHTML = "";
+
+    for (let i = 0; i < newNumberOfPagination; i += 1) {
+        // 3.5.1 Inside the loop: Create the DOM elements needed to display the pagination button as you iterate over the number of pages. Here is an example of what the the final version of these elements should look like: <li><button type="button">1</button></li>
+        // 3.5.2 Insert the elements you have created to the link-list variable you created earlier. The insertAdjacentHTML method and beforeend option works well for this.
+        // 3.6 Select the first pagination button and give it a class name of active.
+        if (i == 0) {
+            ulLink.insertAdjacentHTML("beforeend",
+                `<li>
+                    <button class='active' type="button">${i + 1}</button>
+                </li >`);
+        }
+        else {
+            ulLink.insertAdjacentHTML("beforeend",
+                `<li>
+                    <button type="button">${i + 1}</button>
+                </li >`);
+        }
+    }
+}
+
+
 /**
  * Event listeners for buttons - Invoke your search function in the body of the callbacks in the event listeners below
  */
+
 /* submit listener */
 searchButton.addEventListener('click', (event) => {
     event.preventDefault();
 
     // Invoke your search function here - Arguments: search, tableCells
     searchStudents(searchButton, data);
+    // searchPagination();
 
     // Helpful log statement to test function
     console.log('Submit button is functional!');
@@ -166,7 +207,80 @@ search.addEventListener('keyup', () => {
 
     // Invoke your search function here - Arguments: search, tableCells
     searchStudents(search, data);
+    // searchPagination();
+
 
     // Helpful log statement to test function
     console.log('Keyup event on the Search input is functional!');
 });
+
+
+
+
+
+
+
+
+
+
+
+// /* submit listener */
+// search.addEventListener('click', (event) => {
+//     event.preventDefault();
+
+//     // Invoke your search function here - Arguments: search, tableCells
+//     searchItems(search, tableCells);
+
+//     // Helpful log statement to test function
+//     console.log('Submit button is functional!');
+// });
+
+// /* submit listener */
+// search.addEventListener('keyup', () => {
+
+//     // Invoke your search function here - Arguments: search, tableCells
+//     searchItems(search, tableCells);
+
+
+//     // Helpful log statement to test function
+//     console.log('Keyup event on the Search input is functional!');
+
+// searchBar.addEventListener('keyup', (e) => {
+//     const searchInput = e.target.value.toLowerCase();
+
+//     searchBar.addEventListener('keyup', (e) => {
+//         const searchInput = e.target.value.toLowerCase();
+
+//         Array.from(students).forEach(function (students) {
+//             const name = students.textContent;
+//             if (name.toLowerCase().indexOf(inputName) !== -1) {
+//                 students.style.display = 'flex';
+//                 p.style.display = 'none';
+//             } else if (name.toLowerCase().indexOf(inputName) == -1) {
+//                 students.style.display = 'none';
+//                 p.style.display = 'flex';
+//             }
+//         })
+
+//     });
+
+
+
+//     const searchBar = document.getElementById("search");
+
+//     searchBar.addEventListener('keyup', (e) => {
+//         const inputName = e.target.value.toLowerCase();
+//         const cards = document.querySelectorAll('.student-item');
+
+//         Array.from(cards).forEach(function (cards) {
+//             const name = cards.textContent;
+//             if (name.toLowerCase().indexOf(inputName) !== -1) {
+//                 cards.style.display = 'flex';
+//                 p.style.display = 'none';
+//             } else if (name.toLowerCase().indexOf(inputName) == -1) {
+//                 cards.style.display = 'none';
+//                 p.style.display = 'flex';
+//             }
+//         })
+
+//     });
