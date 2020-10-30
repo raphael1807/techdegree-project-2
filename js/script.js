@@ -89,6 +89,8 @@ ulLink.addEventListener('click', (e) => {
     showPage(data, eventTarget.textContent);
 });
 
+
+
 // Call functions
 // Call the first function you created to display a “page”, passing in the data variable and 1 as arguments.
 showPage(data, 1);
@@ -96,27 +98,17 @@ showPage(data, 1);
 // Call the second function you created to add pagination buttons, passing the data variable as an argument.
 paginationButtons(data);
 
+
+
 // 
 // 
 // 
 // Extra
-// 1. Add a Search Component
-// Dynamically create and add a search bar. Avoid making any changes in the index.html file and instead use your JavaScript skills for this. 
-// Below is an example of the format of the search bar elements. Search bar can't be unstyled. If you follow the example below, 
-// the provided CSS will style the search bar for you.
-
 header.insertAdjacentHTML("beforeend",
     `<label for="search" class="student-search">
         <input id="search" placeholder="Search by name...">
         <button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
   </label>`);
-
-// 2. Add Functionality to the Search Component
-// When the "Search" icon is clicked, the student data is filtered so that
-// only students whose name matches the search query are shown.
-// For example, if the name Bill is typed into the search field, only students with “Bill”
-// in the name should be shown. If the letter S is typed in, only students with an “S” in
-// the name should be shown.
 
 const search = document.querySelector('#search');
 const searchLabel = document.querySelector('.student-search');
@@ -125,25 +117,33 @@ const searchButton = searchLabel.querySelector('[type="button"]');
 
 function searchStudents(searchInput, students) {
     ulStudent.innerHTML = "";
+    // Creates a new empty array of objects 
     let data2 = [];
 
+    // Loops every objects of the array students
     students.forEach(function (person) {
 
+        // If searchInput = Empty, calls the initial functions
         if (searchInput.value.length == 0) {
             showPage(data, 1);
             paginationButtons(data);
         }
+
+        // If searchInput is not empty and objects of the array includes values of the searchInput:
         else if (searchInput.value.length != 0 && person.name.first.toLowerCase().includes(searchInput.value.toLowerCase())) {
+            // objects are added to the array
             data2.push(person);
+            // objects of the arrays who meet the search input are displayed
             showPage(data2, 1)
+            // number of pagination of button are added 
             paginationButtons(data2);
         }
-
-        // if (data2 = []) {
-        //     ulStudent.innerHTML = "";
-        //     ulStudent.insertAdjacentHTML("beforeend", '<p>No results found</p>');
-        // }
     });
+    // If the new array of objects is empty, it throws an error
+    if (searchInput.value.length != 0 && data2.length === 0) {
+        ulStudent.innerHTML = "";
+        ulStudent.insertAdjacentHTML("beforeend", '<p>No results found</p>');
+    }
 }
 
 /**
