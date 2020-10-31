@@ -20,13 +20,13 @@ const itemsPerPage = 9;
 
 // This function will create and insert/append the elements needed to display a "page" of nine students
 function showPage(list, page) {
-
+    console.log(list.length);
     // Variables to store the start index and the end index of the list items to be displayed on the given page.
     const startIndex = (page * itemsPerPage) - itemsPerPage;
     const endIndex = page * itemsPerPage;
 
     ulStudent.innerHTML = "";
-
+    console.log(list.length);
     // Loop over the list parameter
     for (let i = 0; i < list.length; i += 1) {
         // Conditional statement that checks if the current index (i) is greater than or equal to the start index variable and less than the end index variable.
@@ -43,6 +43,7 @@ function showPage(list, page) {
                     </div>
                 </li> `);
         }
+        console.log(list.length);
     }
 }
 
@@ -71,24 +72,22 @@ function paginationButtons(list) {
             </li >`);
         }
     }
+    // Event listener to listen for clicks on the link-list variable 
+    ulLink.addEventListener('click', (e) => {
+        let eventTarget = e.target;
+        // Click event only fire when the buttons are clicked. 
+        if (eventTarget.tagName === 'BUTTON') {
+            // Active class from any other pagination button.
+            document.querySelector('.active').className = '';
+            // Active class added to the pagination button that was just clicked.
+            e.target.className = 'active';
+            // Call the showPage function passing the list parameter and the page number to display as arguments.
+            showPage(list, eventTarget.textContent);
+        }
 
+
+    });
 }
-
-// Event listener to listen for clicks on the link-list variable 
-ulLink.addEventListener('click', (e) => {
-    let eventTarget = e.target;
-    // Click event only fire when the buttons are clicked. 
-    if (eventTarget.tagName === 'BUTTON') {
-        // Active class from any other pagination button.
-        document.querySelector('.active').className = '';
-        // Active class added to the pagination button that was just clicked.
-        e.target.className = 'active';
-    }
-
-    // Call the showPage function passing the list parameter and the page number to display as arguments.
-    showPage(data, eventTarget.textContent);
-});
-
 
 
 // Call functions
@@ -154,7 +153,7 @@ searchButton.addEventListener('click', (event) => {
     event.preventDefault();
 
     // Invoke your search function here - Arguments: search, tableCells
-    searchStudents(searchButton, data);
+    searchStudents(search, data);
 
     // Helpful log statement to test function
     console.log('Submit button is functional!');
@@ -163,7 +162,7 @@ searchButton.addEventListener('click', (event) => {
 
 /* submit listener */
 search.addEventListener('keyup', () => {
-
+    event.preventDefault();
     // Invoke your search function here - Arguments: search, tableCells
     searchStudents(search, data);
 
