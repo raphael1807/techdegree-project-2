@@ -84,8 +84,6 @@ function paginationButtons(list) {
             // Call the showPage function passing the list parameter and the page number to display as arguments.
             showPage(list, eventTarget.textContent);
         }
-
-
     });
 }
 
@@ -150,8 +148,6 @@ function searchStudents(searchInput, students) {
  */
 /* submit listener */
 searchButton.addEventListener('click', (event) => {
-    event.preventDefault();
-
     // Invoke your search function here - Arguments: search, tableCells
     searchStudents(search, data);
 
