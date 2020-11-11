@@ -20,13 +20,11 @@ const itemsPerPage = 9;
 
 // This function will create and insert/append the elements needed to display a "page" of nine students
 function showPage(list, page) {
-    console.log(list.length);
     // Variables to store the start index and the end index of the list items to be displayed on the given page.
     const startIndex = (page * itemsPerPage) - itemsPerPage;
     const endIndex = page * itemsPerPage;
 
     ulStudent.innerHTML = "";
-    console.log(list.length);
     // Loop over the list parameter
     for (let i = 0; i < list.length; i += 1) {
         // Conditional statement that checks if the current index (i) is greater than or equal to the start index variable and less than the end index variable.
@@ -43,7 +41,6 @@ function showPage(list, page) {
                     </div>
                 </li> `);
         }
-        console.log(list.length);
     }
 }
 
@@ -114,6 +111,7 @@ const searchButton = searchLabel.querySelector('[type="button"]');
 
 function searchStudents(searchInput, students) {
     ulStudent.innerHTML = "";
+    ulLink.innerHTML = "";
     // Creates a new empty array of objects 
     let data2 = [];
 
@@ -127,7 +125,7 @@ function searchStudents(searchInput, students) {
         }
 
         // If searchInput is not empty and objects of the array includes values of the searchInput:
-        else if (searchInput.value.length != 0 && person.name.first.toLowerCase().includes(searchInput.value.toLowerCase())) {
+        else if (searchInput.value.length != 0 && ((person.name.first.toLowerCase().includes(searchInput.value.toLowerCase())) || (person.name.last.toLowerCase().includes(searchInput.value.toLowerCase())))) {
             // objects are added to the array
             data2.push(person);
             // objects of the arrays who meet the search input are displayed
@@ -150,9 +148,6 @@ function searchStudents(searchInput, students) {
 searchButton.addEventListener('click', (event) => {
     // Invoke your search function here - Arguments: search, tableCells
     searchStudents(search, data);
-
-    // Helpful log statement to test function
-    console.log('Submit button is functional!');
 });
 
 
@@ -161,7 +156,4 @@ search.addEventListener('keyup', () => {
     event.preventDefault();
     // Invoke your search function here - Arguments: search, tableCells
     searchStudents(search, data);
-
-    // Helpful log statement to test function
-    console.log('Keyup event on the Search input is functional!');
 });
